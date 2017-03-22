@@ -1,0 +1,189 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <h:head>
+        <title>#{customerPageController.pageTitle}</title>
+    </h:head>
+    <h:body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+        <a class="navbar-brand text-primary" href="#">Car Sale System</a>
+    </div>
+    <div class="pull-right">
+        <ul class="nav navbar-nav">
+            <li id="nav_1"><a href="#carSearch-div">Cars Searching</a></li>
+            <li id="nav_2"><a href="#mySales-div">My Sales</a></li>
+            <li id="nav_3"><a href="#profile-div">Profile</a></li>
+            <li id="log_out">
+                <h:form>
+                    <h:commandButton class="btn btn-danger" style="margin: 8px" value="Log out" action="#{customerPageController.logOutOnclick()}"></h:commandButton>
+                </h:form>
+            </li>
+            
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row" style="margin-top:80px" id="carSearch-div">
+    <div class="col-md-12">
+      <h2 class="text-center text-primary"><em>Search Cars</em></h2>
+    </div>
+    <div class="col-md-12" style="width: 100%; height: 1px; background-color: #3c78d8"></div>
+    </div>
+    <div class="row" style="margin: 5px">
+        <h:form>
+        <div class="col-md-3"><h4 class="text-primary">Search By: </h4></div>
+        <div class="col-md-3"><h:selectOneMenu class="form-control" value="#{carBean.carSearchCriterionSelectedType}"><f:selectItem itemLabel="All Cars" itemValue="All Cars"/><f:selectItem itemLabel="Model No" itemValue="Model No"/>  
+<f:selectItem itemLabel="Model Name" itemValue="Model Name"/><f:selectItem itemLabel="Maker" itemValue="Maker"/><f:selectItem itemLabel="Type" itemValue="Type"/>
+            <f:selectItem itemLabel="State" itemValue="State"/></h:selectOneMenu></div>
+        <div class="col-md-3"><h:inputText class="form-control" value="#{carBean.carSearchCriterionSelectedValue}"></h:inputText></div>
+        <div class="col-md-3"><h:commandButton class="btn btn-primary btn-block" value="Search" action="#{carBean.searchOnclick()}"></h:commandButton></div>
+        </h:form>
+    </div>
+    <h:outputText id="errMsg" value="#{carBean.errMsg}" ></h:outputText>
+</div>
+        
+<div class="container-fluid">
+<!-- Search Result Table --> 
+    <div class="row">
+        <div class="col-lg-12" style="margin-top:20px;">
+            <div class="panel panel-info">
+                <div class="panel-heading">Searching Results:</div>
+                <h:form>
+                <h:dataTable class="table table-striped table-bordered table-hover datatable" value="#{carBean.searchOnclick()}" var="c" border="1">
+
+                <h:column><f:facet name="header"><p class="text-center">Model No</p></f:facet><p class="text-center">#{c.modelNo}</p></h:column>
+
+                <h:column><f:facet name="header"><p class="text-center">Model Name</p></f:facet><p class="text-center">#{c.modelName}</p></h:column>
+
+                <h:column><f:facet name="header"><p class="text-center">VIN</p></f:facet><p class="text-center">#{c.VIN}</p></h:column>
+
+                <h:column><f:facet name="header"><p class="text-center">Maker</p></f:facet><p class="text-center">#{c.maker}</p></h:column>
+
+                <h:column><f:facet name="header"><p class="text-center">Type</p></f:facet><p class="text-center">#{c.type}</p></h:column>
+
+                <h:column><f:facet name="header"><p class="text-center">State</p></f:facet><p class="text-center">#{c.sellState}</p></h:column>
+
+                <h:column><f:facet name="header"><p class="text-center">Thumbnail</p></f:facet><h:graphicImage class="img-responsive img-thumbnail center-block" value="#{c.thumbnail}" style="width: 150px; height: 100px"></h:graphicImage></h:column>
+
+                <h:column><f:facet name="header"><p class="text-center">Description</p></f:facet><p>#{c.description}</p></h:column>
+
+                <h:column><f:facet name="header"><p class="text-center">Url</p></f:facet><h:inputText value="#{c.previewUrl}"></h:inputText></h:column>
+                
+                <h:column><f:facet name="header"><p class="text-center">Buy</p></f:facet>
+                    <h:commandButton class="btn btn-success btn-block" value="Buy" rendered="#{customerPageController.canBuyCar(c.sellState)}" action="#{saleBean.buyCar(c)}">        
+<!--                        <f:ajax event="click" execute="@form" render="@form" listener=""></f:ajax> -->
+                    </h:commandButton>
+                </h:column>
+                
+                </h:dataTable>
+                </h:form>
+                <h:outputText id="buyCarErrMsg" value="#{saleBean.buyCarErrMsg}" ></h:outputText>
+            </div>
+        </div>
+    </div>
+</div>
+     
+        
+<div class="container">
+    <div class="row" style="margin-top:50px" id="mySales-div">
+        <div class="col-md-12">
+        <h2 class="text-center text-primary"><em>My Sales</em></h2>
+        </div>
+        <div class="col-md-12" style="width: 100%; height: 1px; background-color: #3c78d8"></div>  
+    </div>
+
+    <div class="row" style="margin: 5px">
+        <h:form>
+        <div class="col-md-4"><h4 class="text-primary">Search By: </h4></div>
+        <div class="col-md-4"><h:selectOneMenu class="form-control" value="#{saleBean.saleSearchCriterionSelectedType}"><f:selectItem itemLabel="My Sales" itemValue="My Sales"/><f:selectItem itemLabel="paid" itemValue="paid"/>  
+<f:selectItem itemLabel="unpaid" itemValue="unpaid"/></h:selectOneMenu></div>
+        <div class="col-md-4"><h:commandButton class="btn btn-primary btn-block" value="Search" action="#{saleBean.searchOnclick()}"></h:commandButton></div>
+        </h:form>
+    </div>
+    <h:outputText id="saleSearchErrMsg" value="#{saleBean.saleSearchErrMsg}" ></h:outputText>
+    </div>
+<div class="container-fluid">
+        <!-- Search Result Table --> 
+        <div class="row">
+        <div class="col-lg-12" style="margin-top:20px;">
+            <div class="panel panel-info">
+                <div class="panel-heading">Searching Results:</div>
+                <h:form>
+                <h:dataTable class="table table-striped table-bordered table-hover datatable" value="#{saleBean.searchOnclick()}" var="s" border="1">
+
+                    <h:column><f:facet name="header"><p class="text-center">Customer</p></f:facet><p class="text-center">#{s.customer.firstName} #{s.customer.lastName}</p></h:column>
+
+                    <h:column><f:facet name="header"><p class="text-center">Car</p></f:facet><p class="text-center">#{s.car.maker}, #{s.car.type}, #{s.car.modelName}</p></h:column>
+                    
+                    <h:column><f:facet name="header"><p class="text-center">Thumbnail</p></f:facet><h:graphicImage class="img-responsive img-thumbnail center-block" value="#{s.car.thumbnail}" style="width: 150px; height: 100px"></h:graphicImage></h:column>
+                
+                    <h:column><f:facet name="header"><p class="text-center">Car Url</p></f:facet><h:inputText value="#{s.car.previewUrl}"></h:inputText></h:column>
+
+                    <h:column><f:facet name="header"><p class="text-center">Date</p></f:facet><p class="text-center">#{s.saleDate}</p></h:column>
+
+                    <h:column><f:facet name="header"><p class="text-center">Salesperson</p></f:facet><p class="text-center">#{s.salesperson.firstName} #{s.salesperson.lastName}</p></h:column>
+
+                    <h:column><f:facet name="header"><p class="text-center">Contact</p></f:facet><p class="text-center">#{s.salesperson.phone}</p></h:column>
+
+                    <h:column><f:facet name="header"><p class="text-center">Pay Status</p></f:facet><p class="text-center">#{s.status}</p></h:column>
+                
+                    <h:column><f:facet name="header"><p class="text-center">Operation</p></f:facet>
+                        <h:commandButton class="btn btn-info btn-block" value="Pay Now!" rendered="#{!saleBean.isPaid(s.status)}" action="#{saleBean.payCarInBuyCarPage(s.saleId)}"></h:commandButton>
+                </h:column>
+                
+                </h:dataTable>
+                </h:form>
+                <h:outputText id="payErrMsg" value="#{saleBean.payErrMsg}"></h:outputText>
+            </div>
+        </div>
+    </div>
+</div>       
+        
+    
+<div class="container">   
+    <div class="row" style="margin:50px" id="profile-div">
+    <div class="col-md-12">
+      <h2 class="text-center text-primary"><em>Profile</em></h2>
+    </div>
+    <div class="col-md-12" style="width: 100%; height: 1px; background-color: #3c78d8"></div>
+    </div>
+    <div class="row">
+    <div class="col-md-12">
+        <img src="http://desk.fd.zol-img.com.cn/t_s1280x1024c5/g5/M00/05/06/ChMkJlaYrQuINNMaAA6uXRr80gAAAHUtQF5JyoADq51826.jpg" style="width: 200px; height: 200px" class="img-thumbnail img-circle center-block" alt="My Avatar!" id="avatar-img"></img>     
+    </div>
+    <div class="well" style="margin: 5px; background-color: rgba(245, 245, 245, 0.0)">
+    <div class="row well" style="margin:5px">
+        <div class="col-md-2"><p class="text-center text-primary"><em>Name: </em></p></div>
+        <div class="col-md-10"><h:outputText id="name" class="form-control" value="#{customerPageController.user.firstName} #{customerPageController.user.lastName}"></h:outputText></div>
+    </div>
+    <div class="row well" style="margin:5px">
+        <div class="col-md-2"><p class="text-center text-primary"><em>Type: </em></p></div>
+        <div class="col-md-10"><h:outputText id="type" class="form-control" value="#{customerPageController.user.type}"></h:outputText></div>
+    </div>
+    <div class="row well" style="margin:5px">
+        <div class="col-md-2"><p class="text-center text-primary"><em>Email: </em></p></div>
+        <div class="col-md-10"><h:outputText id="email" class="form-control" value="#{customerPageController.user.email}"></h:outputText></div>
+    </div>
+    <div class="row well" style="margin:5px">
+        <div class="col-md-2"><p class="text-center text-primary"><em>Address: </em></p></div>
+        <div class="col-md-10"><h:outputText id="address" class="form-control" value="#{customerPageController.user.address}"></h:outputText></div>
+    </div>
+    <div class="row well" style="margin:5px">
+        <div class="col-md-2"><p class="text-center text-primary"><em>Phone: </em></p></div>
+        <div class="col-md-10"><h:outputText id="phone" class="form-control" value="#{customerPageController.user.phone}"></h:outputText></div>
+    </div>
+    </div>
+            
+  </div>
+</div>
+        
+        
+    </h:body>
+</html>
+

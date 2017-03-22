@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+<h:head>
+    <title>Car Sale System</title>
+    
+</h:head>
+    
+<h:body>
+    
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+        <a class="navbar-brand text-primary" href="#">Car Sale System</a>
+    </div>
+</nav>
+    
+<div class="container" style="margin-top:150px">
+    <div class="row">
+        <div class="col-md-12"><h1 class="text-center text-primary"><em>Log In</em></h1> </div>
+    </div>
+</div>
+    
+<div class="container" style="margin-top:80px">
+<h:form>   
+<!--  email input -->
+<div class="row" style="margin-top:10px">
+    <div class="col-md-1"><i class="fa fa-user fa-2x"></i></div>
+    <div class="col-md-11"><h:inputText id="email" label="email" class="form-control" value="#{userBean.user.email}" p:placeholder="Email:" required="true" requiredMessage="You must enter your email!"></h:inputText></div>
+</div>  
+<!--password input --> 
+<div class="row" style="margin-top:10px">
+    <div class="col-md-1"><i class="fa fa-pencil fa-2x"></i></div>
+    <div class="col-md-11"><h:inputSecret id="password" label="password" class="form-control" value="#{userBean.user.password}" p:placeholder="Password:" required="true" requiredMessage="You must enter your password!"></h:inputSecret></div>
+</div>     
+<!--Form submit button  -->   
+<div style="margin-top:15px"><h:commandButton class="btn btn-primary btn-block" value="Log in!" action="#{userBean.loginOnclick()}"></h:commandButton></div>
+</h:form>
+    <h:form>
+    <div style="margin-top:10px"><h:commandButton class="btn btn-warning btn-block" value="New face? Register!" action="/register?faces-redirect=true"></h:commandButton></div>
+    </h:form>
+    
+</div>
+    
+    <h:outputText id="errMsg" value="#{userBean.errMsg}" ></h:outputText>
+    
+
+
+<footer>
+    <div class="row" style="margin-top:400px">
+        <div class="col-md-12 text-center text-primary">Designed and Coded by <a href="https://www.freecodecamp.com/xiangxianzui">Hunter</a></div>
+    </div>
+</footer>
+
+</h:body>
+</html>

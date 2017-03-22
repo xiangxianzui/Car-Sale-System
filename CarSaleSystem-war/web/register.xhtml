@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <h:head>
+        <title>Register a new account</title>
+    </h:head>
+    <h:body>
+        
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+        <a class="navbar-brand text-primary" href="#">Car Sale System</a>
+    </div>
+</nav>
+        
+    <div class="container" style="margin-top:150px">
+        <div class="row"><div class="col-md-12"><h1 class="text-center text-primary"><em>Register</em></h1></div></div>
+    </div>
+        
+<div class="container" style="margin-top:80px">
+<h:form>   
+<!--  firstName input -->
+<div class="row" style="margin:5px">
+    <div class="col-md-1"><i class="fa fa-user fa-2x"></i></div>
+    <div class="col-md-11"><h:inputText id="firstName" label="firstName" class="form-control" value="#{userBean.user.firstName}" p:placeholder="Firstname:" required="true" requiredMessage="You must enter your first name!"></h:inputText></div>
+</div>
+<!--lastName input--> 
+<div class="row" style="margin:5px">
+    <div class="col-md-1"><i class="fa fa-user fa-2x"></i></div>
+    <div class="col-md-11"><h:inputText id="lastName" label="lastName" class="form-control" value="#{userBean.user.lastName}" p:placeholder="Lastname:" required="true" requiredMessage="You must enter your last name!"></h:inputText></div>
+</div>  
+<!--type input -->
+<div class="row" style="margin:5px">
+    <div class="col-md-1"><i class="fa fa-hand-o-right fa-2x"></i></div>
+    <div class="col-md-11"><h:selectOneMenu class="form-control" value="#{userBean.user.type}" required="true" requiredMessage="You must select a type!"><f:selectItem itemLabel="Customer" itemValue="Customer"/>  
+<f:selectItem itemLabel="SalesPerson" itemValue="SalesPerson"/></h:selectOneMenu></div>
+</div>
+<!--email input -->
+<div class="row" style="margin:5px">
+    <div class="col-md-1"><i class="fa fa-envelope fa-2x"></i></div>
+    <div class="col-md-11"><h:inputText id="email" label="email" class="form-control" value="#{userBean.user.email}" p:placeholder="Email:" required="true" requiredMessage="You must enter your Email!"></h:inputText></div>
+</div>
+<!--address input -->
+<div class="row" style="margin:5px">
+    <div class="col-md-1"><i class="fa fa-book fa-2x"></i></div>
+    <div class="col-md-11"><h:inputText id="address" label="address" class="form-control" value="#{userBean.user.address}" p:placeholder="Address:" required="true" requiredMessage="You must enter your address!"></h:inputText></div>
+</div>
+<!--phone input -->
+<div class="row" style="margin:5px">
+    <div class="col-md-1"><i class="fa fa-phone fa-2x"></i></div>
+    <div class="col-md-11"><h:inputText id="phone" label="phone" class="form-control" value="#{userBean.user.phone}" p:placeholder="Phone:" required="true" requiredMessage="You must enter your phone!"></h:inputText></div>
+</div>
+<!--password input --> 
+<div class="row" style="margin:5px">
+    <div class="col-md-1"><i class="fa fa-pencil fa-2x"></i></div>
+    <div class="col-md-11"><h:inputSecret id="password" label="password" class="form-control" value="#{userBean.user.password}" p:placeholder="Password:" required="true" requiredMessage="You must enter your password!"></h:inputSecret></div>
+</div>     
+<!--Form submit button  -->   
+<div style="margin:5px"><h:commandButton class="btn btn-primary btn-block" value="Register!" action="#{userBean.registerOnclick()}"></h:commandButton></div>
+</h:form>
+</div>
+        
+        <h:outputText id="errMsg" value="#{userBean.errMsg}" ></h:outputText>
+        
+    </h:body>
+</html>
+
